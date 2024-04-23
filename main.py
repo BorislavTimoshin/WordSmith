@@ -30,7 +30,17 @@ async def start(message: types.Message):
         db.set_person(message.from_user.id)
 
 
-# Обработка кнопки Russian
+# Обработчик команды /change_language
+@dp.message(Command('change_language'))
+async def change_language(message: types.Message):
+    await ms.output_text(
+        message.from_user.id,
+        'Выберите язык, с которым будет идти дальнейшая работа:',
+        menu=nav.language_menu
+    )
+
+
+# Обработка кнопки Русский
 @dp.callback_query(F.data == 'btn_ru')
 async def btn_rus(rus: types.CallbackQuery):
     await ms.delete_and_output_text(
@@ -55,16 +65,6 @@ async def btn_eng(eng: types.CallbackQuery):
     db.set_language(
         eng.from_user.id,
         language='eng'
-    )
-
-
-# Обработчик команды /change_language
-@dp.message(Command('change_language'))
-async def change_language(message: types.Message):
-    await ms.output_text(
-        message.from_user.id,
-        'Выберите язык, с которым будет идти дальнейшая работа:',
-        menu=nav.language_menu
     )
 
 
