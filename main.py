@@ -23,7 +23,8 @@ ms = Message(bot)
 async def start(message: types.Message):
     await ms.output_text(
         message.from_user.id,
-        f'Здравствуйте, <b>{message.from_user.first_name}</b>!\n\nВыберите язык, с которым будет идти дальнейшая работа:',
+        f'Здравствуйте, <b>{message.from_user.first_name}</b>!\n\nВыберите язык, с которым будет идти дальнейшая работа:'
+        f'\n\nЕго всегда можно изменить командой /change_language',
         menu=nav.language_menu
     )
     if not db.person_exists(message.from_user.id):
@@ -46,7 +47,7 @@ async def btn_rus(rus: types.CallbackQuery):
     await ms.delete_and_output_text(
         rus.from_user.id,
         rus.message.message_id,
-        '<b>Отлично!</b>\n\nТеперь вы можете написать боту слово на русском языке, и он выдаст некоторую информацию о нем'
+        '<b>Отлично!</b>\n\nТеперь вы можете написать боту слово на русском языке, и он выдаст его синонимы'
     )
     db.set_language(
         rus.from_user.id,
@@ -60,7 +61,7 @@ async def btn_eng(eng: types.CallbackQuery):
     await ms.delete_and_output_text(
         eng.from_user.id,
         eng.message.message_id,
-        '<b>Отлично!</b>\n\nТеперь вы можете написать боту слово на английском языке, и он выдаст некоторую информацию о нем'
+        '<b>Отлично!</b>\n\nТеперь вы можете написать боту слово на английском языке, и он выдаст его синонимы'
     )
     db.set_language(
         eng.from_user.id,
